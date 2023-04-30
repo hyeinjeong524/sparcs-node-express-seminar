@@ -14,7 +14,6 @@ const FeedPage = (props: {}) => {
   const [ SEditPostContent, setSEditPostContent] = React.useState<string>("");
   const [ SEditPostID, setSEditPostID] = React.useState<string>("");
   
-
   React.useEffect( () => {
     let BComponentExited = false;
     const asyncFun = async () => {
@@ -77,7 +76,6 @@ const FeedPage = (props: {}) => {
           &nbsp;&nbsp;&nbsp;&nbsp;
           Content: <input type={"text"} value={SNewPostContent} onChange={(e) => setSNewPostContent(e.target.value)}/>
           <div className={"post-add-button"} onClick={(e) => createNewPost()}>Add Post!</div>
-
         </div>
 
         <div className={"feed-item-add"}>
