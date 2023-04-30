@@ -10,9 +10,6 @@ class FeedDB {
         return FeedDB._inst_;
     }
 
-    #id = 1; #itemCount = 1; 
-    #LDataDB = [{ id: 0, title: "test1", content: "Example body" }];
-
     constructor() { console.log("[Feed-DB] DB Init Completed"); }
 
     selectItems = async ( count ) => {
