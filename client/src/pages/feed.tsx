@@ -78,11 +78,16 @@ const FeedPage = (props: {}) => {
           <div className={"post-add-button"} onClick={(e) => createNewPost()}>Add Post!</div>
         </div>
 
-        <div className={"feed-item-add"}>
-          ID: <input type={"text"} value={SEditPostID} onChange={(e)=> setSEditPostID(e.target.value)}/>
-          Content: <input type={"text"} value={SEditPostContent} onChange={(e) => setSEditPostContent(e.target.value)}/>
-          <div className={"post-add-button"} onClick={(e) => editPost(SEditPostID, SEditPostContent)}>Edit Post!!</div>
-        </div>
+
+        <p> Edit below </p>
+
+        { LAPIResponse.map( (val, i) =>
+          <div key={i} className={"feed-item"}>
+            <div className={"delete-item"} onClick={(e) => editPost(`${val._id}`, SEditPostContent)}>!edit!</div>
+            <h3 className={"feed-title"}>{ val.title }</h3>
+            <input type={"text"} value={SEditPostContent} onChange={(e) => setSEditPostContent(e.target.value)}/>
+          </div>
+        ) }
 
       </div>
     </div>

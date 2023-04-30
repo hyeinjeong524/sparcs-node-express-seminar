@@ -29,9 +29,15 @@ class FeedDB {
         }
     }
 
-    editItem = (id, content) => {
-        this.#LDataDB[id].content = content;
-        return true;
+    editItem = async (id, content) => {
+        try{
+            const res = await FeedModel.updateOne({_id : id}, {content : content})
+            return true;
+        }catch (e){
+            console.log(`[Feed-DB] Edit Error: ${ e }`);
+            return { success: false, data: `DB Error - ${ e }` };
+        }
+        
     }
 
     insertItem = async( item ) => {
@@ -85,8 +91,7 @@ router.post('/addFeed', async (req, res) => {
 router.post('/editFeed', (req, res) => {
     try{
         const {id, content} = req.body;
-        id_int = parseInt(id);
-        const editResult = feedDBInst.editItem(id_int, content);
+        const editResult = feedDBInst.editItem(id, content);
         return res.status(200).json({ isOK: true });
         
     } catch (e) {
