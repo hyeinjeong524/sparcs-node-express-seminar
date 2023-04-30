@@ -14,7 +14,7 @@ const port = process.env.PORT;
 
 app.use(express.json());
 
-const whitelist = ['http://localhost:3000'];
+const whitelist = ['http://localhost:3000','http://192.168.0.183:3000', 'http://localhost:8080'];
 const corsOptions = {
     origin: (origin, callback) => {
         console.log('[REQUEST-CORS] Request from origin: ', origin);

@@ -11,7 +11,9 @@ const FeedPage = (props: {}) => {
   const [ NPostCount, setNPostCount ] = React.useState<number>(0);
   const [ SNewPostTitle, setSNewPostTitle ] = React.useState<string>("");
   const [ SNewPostContent, setSNewPostContent ] = React.useState<string>("");
-
+  const [ SEditPostContent, setSEditPostContent] = React.useState<string>("");
+  const [ SEditPostID, setSEditPostID] = React.useState<string>("");
+  
   React.useEffect( () => {
     let BComponentExited = false;
     const asyncFun = async () => {
@@ -44,6 +46,13 @@ const FeedPage = (props: {}) => {
     asyncFun().catch(e => window.alert(`AN ERROR OCCURED! ${e}`));
   }
 
+  const editPost = (_id: string, _content:string) => {
+    const asyncFun = async () => {
+      await axios.post( SAPIBase + '/feed/editFeed', {id: _id, content: _content});
+    }
+    asyncFun().catch(e => window.alert(`AN ERROR OCCURED! ${e}`));
+  }
+
   return (
     <div className="Feed">
       <Header/>
@@ -68,6 +77,13 @@ const FeedPage = (props: {}) => {
           Content: <input type={"text"} value={SNewPostContent} onChange={(e) => setSNewPostContent(e.target.value)}/>
           <div className={"post-add-button"} onClick={(e) => createNewPost()}>Add Post!</div>
         </div>
+
+        <div className={"feed-item-add"}>
+          ID: <input type={"text"} value={SEditPostID} onChange={(e)=> setSEditPostID(e.target.value)}/>
+          Content: <input type={"text"} value={SEditPostContent} onChange={(e) => setSEditPostContent(e.target.value)}/>
+          <div className={"post-add-button"} onClick={(e) => editPost(SEditPostID, SEditPostContent)}>Edit Post!!</div>
+        </div>
+
       </div>
     </div>
   );

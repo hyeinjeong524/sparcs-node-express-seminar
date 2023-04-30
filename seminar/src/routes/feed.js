@@ -10,7 +10,8 @@ class FeedDB {
         return FeedDB._inst_;
     }
 
-    // #id = 1; #itemCount = 1; #LDataDB = [{ id: 0, title: "test1", content: "Example body" }];
+    #id = 1; #itemCount = 1; 
+    #LDataDB = [{ id: 0, title: "test1", content: "Example body" }];
 
     constructor() { console.log("[Feed-DB] DB Init Completed"); }
 
@@ -28,7 +29,12 @@ class FeedDB {
         }
     }
 
-    insertItem = async ( item ) => {
+    editItem = (id, content) => {
+        this.#LDataDB[id].content = content;
+        return true;
+    }
+
+    insertItem = ( item ) => {
         const { title, content } = item;
         try {
             const newItem = new FeedModel({ title, content });
@@ -76,7 +82,20 @@ router.post('/addFeed', async (req, res) => {
    }
 });
 
-router.post('/deleteFeed', async (req, res) => {
+router.post('/editFeed', (req, res) => {
+    try{
+        const {id, content} = req.body;
+        id_int = parseInt(id);
+        const editResult = feedDBInst.editItem(id_int, content);
+        return res.status(200).json({ isOK: true });
+        
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({ error: e });
+    }
+})
+
+router.post('/deleteFeed', (req, res) => {
     try {
         const { id } = req.body;
         const deleteResult = await feedDBInst.deleteItem(id);
