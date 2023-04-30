@@ -34,7 +34,7 @@ class FeedDB {
         return true;
     }
 
-    insertItem = ( item ) => {
+    insertItem = async( item ) => {
         const { title, content } = item;
         try {
             const newItem = new FeedModel({ title, content });
@@ -95,7 +95,7 @@ router.post('/editFeed', (req, res) => {
     }
 })
 
-router.post('/deleteFeed', (req, res) => {
+router.post('/deleteFeed', async(req, res) => {
     try {
         const { id } = req.body;
         const deleteResult = await feedDBInst.deleteItem(id);
